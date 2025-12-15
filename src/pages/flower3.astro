@@ -1,0 +1,329 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+<div class="container">
+  <div class="flower">
+    <div class="seeds"></div>
+    <div class="petals">
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+    </div>
+  </div>
+  <div class="stem">
+    <div class="leaves">
+      <div class="leaf"></div>
+      <div class="leaf"></div>
+    </div>
+  </div>
+  <div class="soil"></div>
+</div>
+
+
+</Layout>
+
+<style lang="scss">
+
+
+:root {
+    --stem-color: hsl(159, 56%, 31%);
+    --seeds-color: hsl(25.95, 23.34%, 26.56%);
+    --main-background-color: hsl(196, 81%, 86%);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+$pi: 3.14159265358979;
+$petals-number: 24;
+$petal-angle: calc(360 / $petals-number);
+$seeds-area-width: 7;
+$r: $seeds-area-width / 2;
+$circ: 2 * $pi * $r;
+$initial-r: 0;
+$leaf-width: 3.5;
+$stem-width: 0.625;
+$petal-darker-color: hsl(36.71, 95.95%, 51.57%);
+$petal-lighter-color: hsl(48.67, 97.28%, 73.23%);
+
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100svh;
+    background-color: var(--main-background-color);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    min-height: 80vh;
+}
+
+.soil {
+    z-index: 10;
+    width: 12rem;
+    height: 1.5rem;
+    margin-top: -0.5rem;
+    border-radius: 0.75rem;
+    background-color: var(--seeds-color);
+    position: relative;
+    &:after {
+        content: '';
+        top: 100%;
+        position: absolute;
+        width: 100%;
+        height: 200%;
+        background-color: var(--main-background-color);
+    }
+}
+
+.stem {
+    margin-top: -5%;
+    width: #{$stem-width}rem;
+    height: clamp(5rem, calc(48vh + 1rem), 25rem);
+    border-radius: 0.25rem;
+    background-color: var(--stem-color);
+    animation: 2500ms stem-grow ease-in-out 1;
+}
+
+.leaves {
+    position: relative;
+    top: 40%;
+}
+
+.leaf {
+    width: #{$leaf-width}rem;
+    height: 3.25rem;
+    background-color: var(--stem-color);
+    border-radius: 80% 0;
+    position: relative;
+    &:nth-child(1) {
+        transform: scale(1) rotate(69deg) translate(-2.75rem, 3rem);
+        animation: 1000ms left-leaf-grow ease-in-out 2700ms 1;
+    }
+    &:nth-child(2) {
+        $right-leaf-width: 2.75;
+        transform: translate(1.1rem, -4rem) rotate(214deg) scale(1);
+        width: #{$right-leaf-width}rem;
+    }
+}
+
+.flower {
+    display: grid;
+    grid-template-areas: "stack";
+    justify-items: center;
+    align-items: center;
+    z-index: 10;
+    visibility: hidden;
+    &.animated {
+        visibility: visible;
+        transform: translateY(0) scale(1);
+        animation: flower-grow 2500ms ease-in-out 1;
+    }
+}
+
+.petals {
+    position: relative;
+    grid-area: stack;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .petals {
+        animation: 20000ms flower-rotate linear 2;
+    }
+}
+
+.seeds {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-area: stack;
+    width: calc(#{$seeds-area-width}rem + 2rem);
+    height: calc(#{$seeds-area-width}rem + 2rem);
+    border-radius: 50%;
+    background-color: var(--seeds-color);
+    z-index: 1;
+
+    position: relative;
+    &::after {
+        content: '';
+        position: absolute;
+        width: 90%;
+        height: 90%;
+        border-radius: 50%;
+        background: radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 22% 52%/ 3% 3% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 62% 32%/ 3% 3% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 62% 58%/ 3% 3% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 36% 69%/ 3% 3% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 36% 81%/ 3% 3% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 49% 70%/ 4% 4% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 76% 70%/ 4% 4% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 76% 26%/ 4% 4% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 18% 62%/ 4% 4% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 65% 43%/ 4% 4% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 51% 45%/ 4% 4% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 38% 50%/ 5% 5% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 24% 40%/ 5% 5% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 37% 34%/ 5% 5% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 54% 28%/ 5% 5% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 44% 29%/ 5% 5% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 57% 18%/ 5% 5% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 47% 18%/ 6% 6% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 17% 31%/ 6% 6% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 12% 40%/ 6% 6% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 34% 21%/ 6% 6% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 24% 26%/ 6% 6% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 34% 12%/ 6% 6% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 23% 11%/ 6% 6% no-repeat,
+        radial-gradient(100% 100% at 50% 50%, #534134 50%, transparent 51%) 15% 17%/ 6% 6% no-repeat,
+        #291506;
+    }
+}
+
+.petal {
+    position: absolute;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 80% 0% 55% 0/ 80% 55% 80% 0; 
+    background-image: radial-gradient(100% 100% at 50% 50%, $petal-darker-color, $petal-lighter-color);
+    box-shadow: inset 2px 2px 5px transparent;
+    &.animated {
+        @for $i from 1 through $petals-number {
+            &:nth-child(#{$i}) {
+            animation: grow-#{$i} 3000ms ease-in-out 1;
+            animation-delay: 25ms * $i;
+            transform: translateX((0 + $initial-r * cos(2 * $pi * $i / $petals-number)) + rem)
+                    translateY((0 + $initial-r * sin(2 * $pi * $i / $petals-number)) + rem)
+                    rotate((360 / $petals-number * $i + 55) + deg)
+                    skew(-13deg, -41deg);
+          }
+        }
+    }
+    &.animation-done {
+        @for $i from 1 through $petals-number {
+            &:nth-child(#{$i}) {
+                $full-r: $circ / $petals-number * 5;
+                transform: translateX((0 + $full-r * cos(2 * $pi * $i / $petals-number)) + rem)
+                    translateY((0 + $full-r * sin(2 * $pi * $i / $petals-number)) + rem)
+                    rotate((360 / $petals-number * $i + 55) + deg)
+                    skew(-13deg, -41deg);
+                animation: 2000ms end-animation-#{$i}  ease-in-out 1;
+                animation-delay: 80ms * $i;
+            }
+        }
+    }
+}
+
+
+@keyframes flower-rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@for $i from 1 through $petals-number {
+    $new-r: $circ / $petals-number * 5;
+    @keyframes grow-#{$i} {
+        0% {
+            transform: translateX(0 + $initial-r * cos(2 * $pi * $i / $petals-number) + rem)
+                translateY(0 + $initial-r * sin(2 * $pi * $i / $petals-number) + rem)
+                rotate((360 / $petals-number * $i + 55) + deg)
+                skew(-13deg, -41deg);
+        }
+        100% {
+            transform: translateX(0 + $new-r * cos(2 * $pi * $i / $petals-number) + rem)
+                translateY(0 + $new-r * sin(2 * $pi * $i / $petals-number) + rem)
+                rotate((360 / $petals-number * $i + 55) + deg)
+                skew(-13deg, -41deg);
+        }
+
+    }
+}
+
+@for $i from 1 through $petals-number {
+    $start-r: $circ / $petals-number * 5;
+    $end-r: $circ / $petals-number * 6;
+    @keyframes end-animation-#{$i} {
+        0% {
+            transform: translateX(0 + $start-r * cos(2 * $pi * $i / $petals-number) + rem)
+                translateY(0 + $start-r * sin(2 * $pi * $i / $petals-number) + rem)
+                rotate((360 / $petals-number * $i + 55) + deg)
+                skew(-13deg, -41deg);
+        }
+        100% {
+            transform: translateX(0 + $end-r * cos(2 * $pi * $i / $petals-number) + rem)
+                translateY(0 + $end-r * sin(2 * $pi * $i / $petals-number) + rem)
+                rotate((360 / $petals-number * $i + 55) + deg)
+                skew(-13deg, -41deg);
+        }
+
+    }
+}
+
+@keyframes stem-grow {
+    from {
+        height: 0;
+    }
+}
+
+@keyframes flower-grow {
+    from {
+        transform: translateY(50%) scale(0);
+    }
+}
+
+
+</style>
+
+<script>
+    const flower = document.getElementsByClassName('flower')[0];
+const petals = document.querySelectorAll('.petal');
+
+const flowerTimeout = setTimeout(() => {
+    flower.classList.add('animated');
+}, 1800);
+
+const petalsGrowTimeout = setTimeout(() => {
+    petals.forEach(petal => {
+        petal.classList.add('animated');
+    })
+}, 3000);
+
+const petalsEndAnimationTimeout = setTimeout(() => {
+    petals.forEach(petal => {
+        petal.classList.add('animation-done');
+    })
+}, 5800);
+
+</script>
