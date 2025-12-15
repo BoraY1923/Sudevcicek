@@ -1719,6 +1719,15 @@ body {
   animation-play-state: paused !important;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .flower,
+  .flower * {
+    animation: none !important;
+  }
+}
+
+
+
 </style>
 
 
@@ -1730,5 +1739,7 @@ onload = () => {
     clearTimeout(c);
   }, 1000);
 };
+
+
 
 </script>
