@@ -1,0 +1,164 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İyi ki Doğdun Seda Teyzem!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@600&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        * { padding: 0; margin: 0; box-sizing: border-box; }
+
+        body {
+            /* Arka Plan */
+            background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- GİRİŞ EKRANI --- */
+        #intro-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease-out;
+        }
+
+        .intro-question {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 60px;
+            text-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
+            padding: 0 20px;
+            user-select: none;
+        }
+
+        .btn-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 50px;
+        }
+
+        .btn {
+            padding: 15px 45px;
+            font-size: 1.3rem;
+            font-family: 'Poppins', sans-serif;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-weight: bold;
+            transition: all 0.4s ease; /* Yumuşak kaçış hareketi */
+            position: relative;
+            z-index: 10000; /* En üstte kalsın */
+        }
+
+        
+
+
+        /* --- ANA İÇERİK --- */
+        #main-content {
+            opacity: 0;
+            transition: opacity 2s ease-in;
+            width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0;
+            pointer-events: none;
+        }
+
+        /* Mesajlar */
+
+        .title { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: #fff; text-shadow: 0 0 10px #e91e63; }
+        .subtitle { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 600; color: #fff; margin-top: 10px; text-shadow: 0 0 10px rgba(255, 105, 180, 0.8); }
+        .age-badge { display: inline-block; background: rgba(255, 255, 255, 0.4); padding: 5px 20px; border-radius: 50px; margin-top: 10px; border: 2px solid #fff; color: #fff; font-weight: bold; box-shadow: 0 0 15px rgba(255, 105, 180, 0.4); }
+
+        /* Çiçekler ve Animasyonlar */
+        :root {
+            --flower-center: radial-gradient(circle at center, #fffacd, #ffb6c1);
+            --petal-color-outer: linear-gradient(to top, #fff0f5 20%, #ffb6c1 60%, #ff69b4 100%);
+            --petal-color-inner: linear-gradient(to top, #ffe4e1 10%, #ff1493 70%, #c71585 100%);
+            --line-color: linear-gradient(to left top, #82ff86 20%, #144425, #104e1c);
+            --leaf-color: radial-gradient(circle, #82ff86, #104e1c);
+        }
+        .bouquet-container { position: absolute; bottom: -15vmin; left: 50%; transform: translateX(-50%); width: auto; height: auto; z-index: 50; animation: bouquet-sway 5s ease-in-out infinite alternate; }
+        @keyframes bouquet-sway { from { transform: translateX(-50%) rotate(-3deg); } to { transform: translateX(-50%) rotate(3deg); } }
+        .flower_wrapper { position: absolute; left: 50%; transform-origin: center bottom; }
+        .flower_stem { width: 1.5vmin; height: 60vmin; background-image: var(--line-color); border-radius: 4vmin; }
+        .flower_center { position: absolute; top: -1.5vmin; left: 50%; z-index: 25; transform: translateX(-50%); width: 8vmin; height: 8vmin; border-radius: 50%; background: var(--flower-center); box-shadow: 0 0 10px rgba(255, 182, 193, 0.6); }
+        .petal-style { position: absolute; left: 50%; bottom: 56vmin; transform-origin: center bottom; clip-path: none; border-radius: 50% 50% 10% 10% / 80% 80% 20% 20%; animation: open-flower 2s backwards; }
+        .outer_petal { z-index: 21; width: 3vmin; height: 20vmin; background: var(--petal-color-outer); transform: translateX(-50%); }
+        .inner_petal { z-index: 22; width: 2.5vmin; height: 15vmin; background: var(--petal-color-inner); bottom: 57vmin; transform: translateX(-50%); }
+        .flower_leaf { position: absolute; left: 50%; width: 5vmin; height: 12vmin; background: var(--leaf-color); border-radius: 10vmin 2vmin 10vmin 2vmin; transform-origin: center bottom; z-index: 20; }
+        .f-tier3-left { bottom: 8vmin; margin-left: -10vmin; transform: rotate(-20deg) scale(1.0); z-index: 5; } .f-tier3-right { bottom: 7vmin; margin-left: 11vmin; transform: rotate(18deg) scale(1.0); z-index: 6; } .f-tier3-mid { bottom: 10vmin; margin-left: 1vmin; transform: rotate(3deg) scale(1.05); z-index: 4; } .f-tier2-main { bottom: 4vmin; margin-left: 0vmin; transform: rotate(-2deg) scale(1.0); z-index: 15; } .f-tier1-left { bottom: 0vmin; margin-left: -7vmin; transform: rotate(-12deg) scale(0.85); z-index: 30; } .f-tier1-right { bottom: 1vmin; margin-left: 8vmin; transform: rotate(10deg) scale(0.9); z-index: 31; }
+        @keyframes open-flower { 0% { transform: translateX(-50%) scaleY(0.1); opacity: 0; } }
+        .rot-0 { transform: translateX(-50%) rotate(0deg); } .rot-30 { transform: translateX(-50%) rotate(30deg); } .rot-60 { transform: translateX(-50%) rotate(60deg); } .rot-90 { transform: translateX(-50%) rotate(90deg); } .rot-120 { transform: translateX(-50%) rotate(120deg); } .rot-150 { transform: translateX(-50%) rotate(150deg); } .rot-180 { transform: translateX(-50%) rotate(180deg); } .rot-210 { transform: translateX(-50%) rotate(210deg); } .rot-240 { transform: translateX(-50%) rotate(240deg); } .rot-270 { transform: translateX(-50%) rotate(270deg); } .rot-300 { transform: translateX(-50%) rotate(300deg); } .rot-330 { transform: translateX(-50%) rotate(330deg); }
+        .rot-15 { transform: translateX(-50%) rotate(15deg); } .rot-45 { transform: translateX(-50%) rotate(45deg); } .rot-75 { transform: translateX(-50%) rotate(75deg); } .rot-105 { transform: translateX(-50%) rotate(105deg); } .rot-135 { transform: translateX(-50%) rotate(135deg); } .rot-165 { transform: translateX(-50%) rotate(165deg); } .rot-195 { transform: translateX(-50%) rotate(195deg); } .rot-225 { transform: translateX(-50%) rotate(225deg); } .rot-255 { transform: translateX(-50%) rotate(255deg); } .rot-285 { transform: translateX(-50%) rotate(285deg); } .rot-315 { transform: translateX(-50%) rotate(315deg); } .rot-345 { transform: translateX(-50%) rotate(345deg); }
+        .leaf-1 { bottom: 20vmin; transform: translateX(-50%) rotate(45deg); } .leaf-2 { bottom: 25vmin; transform: translateX(-50%) rotate(-45deg); }
+
+        /* Uçuşanlar */
+        .floater { position: absolute; bottom: -20vh; color: rgba(255, 255, 255, 0.95); font-size: 1.5rem; font-weight: bold; text-shadow: 0 0 5px #ff1493, 0 0 15px #ff4081; animation: floatUp linear infinite; z-index: 101; user-select: none; white-space: nowrap; }
+        .floater img { width: 120px; height: 120px; object-fit: cover; object-position: top; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.9); box-shadow: 0 0 15px rgba(255, 105, 180, 0.5); background-color: #fff; display: block; }
+        .floater-img-container { font-size: 0; }
+        @keyframes floatUp { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-130vh) rotate(20deg); } }
+
+        .i-1 { left: 5%; animation-duration: 12s; animation-delay: -5s; font-size: 1.8rem; } .i-2 { left: 88%; animation-duration: 14s; animation-delay: -2s; font-size: 1.5rem; } .i-3 { left: 15%; animation-duration: 16s; animation-delay: -8s; font-size: 1.3rem; } .i-4 { left: 75%; animation-duration: 13s; animation-delay: -1s; font-size: 2.5rem; color: #ffd700; } .i-5 { left: 45%; animation-duration: 15s; animation-delay: -4s; font-size: 1.6rem; } .i-6 { left: 25%; animation-duration: 14s; animation-delay: -6s; font-size: 1.7rem; } .i-7 { left: 65%; animation-duration: 17s; animation-delay: -3s; font-size: 1.9rem; } .i-8 { left: 35%; animation-duration: 13s; animation-delay: -9s; font-size: 1.6rem; } .i-9 { left: 92%; animation-duration: 15s; animation-delay: -2s; font-size: 1.8rem; } .i-10{ left: 55%; animation-duration: 16s; animation-delay: -7s; font-size: 1.7rem; }
+        .p-1 { left: 80%; animation-duration: 15s; animation-delay: -5s; } .p-2 { left: 10%; animation-duration: 16s; animation-delay: -10s; } .p-3 { left: 40%; animation-duration: 14s; animation-delay: -2s; } .p-4 { left: 95%; animation-duration: 17s; animation-delay: -12s; }
+        .p-1b { left: 20%; animation-duration: 14s; animation-delay: -1s; } .p-2b { left: 70%; animation-duration: 15s; animation-delay: -7s; } .p-3b { left: 5%; animation-duration: 16s; animation-delay: -14s; } .p-4b { left: 60%; animation-duration: 13s; animation-delay: -4s; }
+        .i-1b { left: 30%; animation-duration: 12s; animation-delay: -3s; font-size: 1.5rem; } .i-4b { left: 50%; animation-duration: 14s; animation-delay: -10s; font-size: 2rem; color: #ffd700;} .i-11 { left: 12%; animation-duration: 11s; animation-delay: -1s; } .i-12 { left: 85%; animation-duration: 13s; animation-delay: -6s; font-size: 2rem; }
+
+        @media (max-width: 600px) {
+            .bouquet-container { transform: translateX(-50%) scale(0.65); bottom: -20vmin; }
+            .title { font-size: 3rem; }
+            .floater { font-size: 1rem; }
+            .floater img { width: 80px; height: 80px; }
+            .intro-question { font-size: 2rem; }
+            #no-btn { right: auto; } /* Mobilde sabitleme */
+        }
+    </style>
+</head>
+<body>
+
+   
+
+    
+
+        <div class="bouquet-container">
+            <div class="flower_wrapper f-tier3-left"><div class="flower_stem"></div><div class="flower_center"></div><div class="petal-style outer_petal rot-0"></div><div class="petal-style outer_petal rot-30"></div><div class="petal-style outer_petal rot-60"></div><div class="petal-style outer_petal rot-90"></div><div class="petal-style outer_petal rot-120"></div><div class="petal-style outer_petal rot-150"></div><div class="petal-style outer_petal rot-180"></div><div class="petal-style outer_petal rot-210"></div><div class="petal-style outer_petal rot-240"></div><div class="petal-style outer_petal rot-270"></div><div class="petal-style outer_petal rot-300"></div><div class="petal-style outer_petal rot-330"></div><div class="petal-style inner_petal rot-15"></div><div class="petal-style inner_petal rot-45"></div><div class="petal-style inner_petal rot-75"></div><div class="petal-style inner_petal rot-105"></div><div class="petal-style inner_petal rot-135"></div><div class="petal-style inner_petal rot-165"></div><div class="petal-style inner_petal rot-195"></div><div class="petal-style inner_petal rot-225"></div><div class="petal-style inner_petal rot-255"></div><div class="petal-style inner_petal rot-285"></div><div class="petal-style inner_petal rot-315"></div><div class="petal-style inner_petal rot-345"></div><div class="flower_leaf leaf-1"></div></div>
+            <div class="flower_wrapper f-tier3-right"><div class="flower_stem"></div><div class="flower_center"></div><div class="petal-style outer_petal rot-0"></div><div class="petal-style outer_petal rot-30"></div><div class="petal-style outer_petal rot-60"></div><div class="petal-style outer_petal rot-90"></div><div class="petal-style outer_petal rot-120"></div><div class="petal-style outer_petal rot-150"></div><div class="petal-style outer_petal rot-180"></div><div class="petal-style outer_petal rot-210"></div><div class="petal-style outer_petal rot-240"></div><div class="petal-style outer_petal rot-270"></div><div class="petal-style outer_petal rot-300"></div><div class="petal-style outer_petal rot-330"></div><div class="petal-style inner_petal rot-15"></div><div class="petal-style inner_petal rot-45"></div><div class="petal-style inner_petal rot-75"></div><div class="petal-style inner_petal rot-105"></div><div class="petal-style inner_petal rot-135"></div><div class="petal-style inner_petal rot-165"></div><div class="petal-style inner_petal rot-195"></div><div class="petal-style inner_petal rot-225"></div><div class="petal-style inner_petal rot-255"></div><div class="petal-style inner_petal rot-285"></div><div class="petal-style inner_petal rot-315"></div><div class="petal-style inner_petal rot-345"></div><div class="flower_leaf leaf-2"></div></div>
+            <div class="flower_wrapper f-tier3-mid"><div class="flower_stem"></div><div class="flower_center"></div><div class="petal-style outer_petal rot-0"></div><div class="petal-style outer_petal rot-30"></div><div class="petal-style outer_petal rot-60"></div><div class="petal-style outer_petal rot-90"></div><div class="petal-style outer_petal rot-120"></div><div class="petal-style outer_petal rot-150"></div><div class="petal-style outer_petal rot-180"></div><div class="petal-style outer_petal rot-210"></div><div class="petal-style outer_petal rot-240"></div><div class="petal-style outer_petal rot-270"></div><div class="petal-style outer_petal rot-300"></div><div class="petal-style outer_petal rot-330"></div><div class="petal-style inner_petal rot-15"></div><div class="petal-style inner_petal rot-45"></div><div class="petal-style inner_petal rot-75"></div><div class="petal-style inner_petal rot-105"></div><div class="petal-style inner_petal rot-135"></div><div class="petal-style inner_petal rot-165"></div><div class="petal-style inner_petal rot-195"></div><div class="petal-style inner_petal rot-225"></div><div class="petal-style inner_petal rot-255"></div><div class="petal-style inner_petal rot-285"></div><div class="petal-style inner_petal rot-315"></div><div class="petal-style inner_petal rot-345"></div></div>
+            <div class="flower_wrapper f-tier2-main"><div class="flower_stem"></div><div class="flower_center"></div><div class="petal-style outer_petal rot-0"></div><div class="petal-style outer_petal rot-30"></div><div class="petal-style outer_petal rot-60"></div><div class="petal-style outer_petal rot-90"></div><div class="petal-style outer_petal rot-120"></div><div class="petal-style outer_petal rot-150"></div><div class="petal-style outer_petal rot-180"></div><div class="petal-style outer_petal rot-210"></div><div class="petal-style outer_petal rot-240"></div><div class="petal-style outer_petal rot-270"></div><div class="petal-style outer_petal rot-300"></div><div class="petal-style outer_petal rot-330"></div><div class="petal-style inner_petal rot-15"></div><div class="petal-style inner_petal rot-45"></div><div class="petal-style inner_petal rot-75"></div><div class="petal-style inner_petal rot-105"></div><div class="petal-style inner_petal rot-135"></div><div class="petal-style inner_petal rot-165"></div><div class="petal-style inner_petal rot-195"></div><div class="petal-style inner_petal rot-225"></div><div class="petal-style inner_petal rot-255"></div><div class="petal-style inner_petal rot-285"></div><div class="petal-style inner_petal rot-315"></div><div class="petal-style inner_petal rot-345"></div><div class="flower_leaf leaf-1"></div></div>
+            <div class="flower_wrapper f-tier1-left"><div class="flower_stem"></div><div class="flower_center"></div><div class="petal-style outer_petal rot-0"></div><div class="petal-style outer_petal rot-30"></div><div class="petal-style outer_petal rot-60"></div><div class="petal-style outer_petal rot-90"></div><div class="petal-style outer_petal rot-120"></div><div class="petal-style outer_petal rot-150"></div><div class="petal-style outer_petal rot-180"></div><div class="petal-style outer_petal rot-210"></div><div class="petal-style outer_petal rot-240"></div><div class="petal-style outer_petal rot-270"></div><div class="petal-style outer_petal rot-300"></div><div class="petal-style outer_petal rot-330"></div><div class="petal-style inner_petal rot-15"></div><div class="petal-style inner_petal rot-45"></div><div class="petal-style inner_petal rot-75"></div><div class="petal-style inner_petal rot-105"></div><div class="petal-style inner_petal rot-135"></div><div class="petal-style inner_petal rot-165"></div><div class="petal-style inner_petal rot-195"></div><div class="petal-style inner_petal rot-225"></div><div class="petal-style inner_petal rot-255"></div><div class="petal-style inner_petal rot-285"></div><div class="petal-style inner_petal rot-315"></div><div class="petal-style inner_petal rot-345"></div><div class="flower_leaf leaf-2"></div></div>
+            <div class="flower_wrapper f-tier1-right"><div class="flower_stem"></div><div class="flower_center"></div><div class="petal-style outer_petal rot-0"></div><div class="petal-style outer_petal rot-30"></div><div class="petal-style outer_petal rot-60"></div><div class="petal-style outer_petal rot-90"></div><div class="petal-style outer_petal rot-120"></div><div class="petal-style outer_petal rot-150"></div><div class="petal-style outer_petal rot-180"></div><div class="petal-style outer_petal rot-210"></div><div class="petal-style outer_petal rot-240"></div><div class="petal-style outer_petal rot-270"></div><div class="petal-style outer_petal rot-300"></div><div class="petal-style outer_petal rot-330"></div><div class="petal-style inner_petal rot-15"></div><div class="petal-style inner_petal rot-45"></div><div class="petal-style inner_petal rot-75"></div><div class="petal-style inner_petal rot-105"></div><div class="petal-style inner_petal rot-135"></div><div class="petal-style inner_petal rot-165"></div><div class="petal-style inner_petal rot-195"></div><div class="petal-style inner_petal rot-225"></div><div class="petal-style inner_petal rot-255"></div><div class="petal-style inner_petal rot-285"></div><div class="petal-style inner_petal rot-315"></div><div class="petal-style inner_petal rot-345"></div><div class="flower_leaf leaf-1"></div><div class="flower_leaf leaf-2"></div></div>
+        </div>
+   
+
+    <script>
+      
+        
+     
+
+        
+       
+
+        </script>
+            
+        
+</body>
+</Layout>
